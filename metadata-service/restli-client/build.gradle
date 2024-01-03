@@ -1,0 +1,19 @@
+apply plugin: 'pegasus'
+apply plugin: 'java-library'
+
+dependencies {
+  api project(':metadata-service:restli-api')
+  api project(':metadata-auth:auth-api')
+  api project(path: ':metadata-service:restli-api', configuration: 'restClient')
+  api project(':metadata-events:mxe-schemas')
+  api project(':metadata-utils')
+
+  implementation externalDependency.slf4jApi
+  compileOnly externalDependency.lombok
+  annotationProcessor externalDependency.lombok
+
+  implementation spec.product.pegasus.restliClient
+
+  testImplementation externalDependency.mockito
+  testImplementation externalDependency.testng
+}

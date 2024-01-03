@@ -1,0 +1,28 @@
+apply plugin: 'pegasus'
+apply plugin: 'java-library'
+
+tasks.withType(JavaCompile).configureEach {
+  javaCompiler = javaToolchains.compilerFor {
+    languageVersion = JavaLanguageVersion.of(8)
+  }
+}
+tasks.withType(Test).configureEach {
+  javaLauncher = javaToolchains.launcherFor {
+    languageVersion = JavaLanguageVersion.of(8)
+  }
+}
+
+dependencies {
+  implementation spec.product.pegasus.data
+  implementation externalDependency.commonsIo
+  dataModel project(':metadata-models')
+  dataModel project(':li-utils')
+}
+
+idea {
+  module {
+    sourceDirs += file('src/main/javaPegasus')
+  }
+}
+
+sourceSets.mainGeneratedDataTemplate.java.srcDirs('src/main/javaPegasus/')
